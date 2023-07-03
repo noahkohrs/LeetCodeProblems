@@ -22,9 +22,15 @@ class Solution {
             for (int i = 0; i < n; i++) {
                 iter = iter.next;
             }
-            if (iter.next != null)
-                iter.next = iter.next.next;
-
+            if (iter == null) {
+                return head.next;
+            }
+            ListNode prev = head;
+            while (iter.next != null) {
+                iter = iter.next;
+                prev = prev.next;
+            }
+            prev.next = prev.next.next;
             return head;
         }
         catch (NullPointerException e) {
