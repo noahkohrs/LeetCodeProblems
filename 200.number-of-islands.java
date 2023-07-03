@@ -7,12 +7,12 @@
 // @lc code=start
 class Solution {
     public int numIslands(char[][] grid) {
-        Map m = new Map(grid);
+        boolean visited[][] = new boolean[grid.length][grid[0].length];
         int res = 0;
-        for (int i = 0; i < m.visited.length; i++) {
-            for (int j = 0; j < m.visited[0].length; j++) {
-                if (m.land[i][j] && !m.visited[i][j]) {
-                    m.visit(i, j);
+        for (int i = 0; i < visited.length; i++) {
+            for (int j = 0; j < visited[0].length; j++) {
+                if (grid[i][j] == '1' && !visited[i][j]) {
+                    visit(i, j, grid, visited);
                     res++;
                 }
             }
@@ -20,33 +20,19 @@ class Solution {
         return res;
     }
 
-    class Map {
-        boolean[][] land;
-        boolean[][] visited;
-
-        Map(char[][] grid) {
-            land = new boolean[grid.length][grid[0].length];
-            visited = new boolean[grid.length][grid[0].length];
-            for (int i = 0; i < grid.length; i++) {
-                for (int j = 0; j < grid[0].length; j++) {
-                    land[i][j] = grid[i][j] == '1';
-                }
-            }
-        }
-
-        void visit(int x, int y) {
-            if (tileExist(x, y) && land[x][y] && !visited[x][y]) {
-                visited[x][y] = true;
-                visit(x + 1, y);
-                visit(x - 1, y);
-                visit(x, y + 1);
-                visit(x, y - 1);
-            }
-        }
-
-        boolean tileExist(int x, int y) {
-            return x >= 0 && x < land.length && y >= 0 && y < land[0].length;
+    void visit(int x, int y, char[][] grid, boolean[][] visited) {
+        if (tileExist(x, y, grid) && grid[x][y] == '1' && !visited[x][y]) {
+            visited[x][y] = true;
+            visit(x + 1, y, grid, visited);
+            visit(x - 1, y, grid, visited);
+            visit(x, y + 1, grid, visited);
+            visit(x, y - 1, grid, visited);
         }
     }
+
+    boolean tileExist(int x, int y, char[][] land) {
+        return x >= 0 && x < land.length && y >= 0 && y < land[0].length;
+    }
+
 }
 // @lc code=end
