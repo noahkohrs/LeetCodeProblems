@@ -7,10 +7,25 @@
 // @lc code=start
 class Solution {
     public double myPow(double x, int n) {
-        for (int i = 0; i < n; i++) {
-            x *= x;
+        if (n == 0) {
+            return 1;
         }
-        return x;
+        if (n == 1) {
+            return x;
+        }
+        if (n == -1) {
+            return 1 / x;
+        }
+        double result = 1;
+        long absN = Math.abs((long) n);
+        while (absN > 0) {
+            if (absN % 2 == 1) {
+                result *= x;
+            }
+            x *= x;
+            absN /= 2;
+        }
+        return n > 0 ? result : 1 / result;
     }
 }
 // @lc code=end
